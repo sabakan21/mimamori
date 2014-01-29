@@ -1,0 +1,14 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <title>AccessBoard一覧</title>
+  </head>
+  <body>
+  <h1>AccessBoard一覧</h1>
+  <table>
+    <th><td>AccessBoard名</td><td>備考</td></th>
+    <% @clients.each do |client| %>
+    <
+    <% end %>
+  
+  </body>
+</html>

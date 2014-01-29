@@ -70,31 +70,22 @@ Net::HTTP.start($uri.host,$uri.port){|http|  #http接続開始
 =end
 
 
-
-    #センサデータ用の変数宣言
-    brightness = Numeric.new
-
     #アナログセンサの値読み取り
     #BeagleboneBlackではアナログ値は1800mVまでのミリボルトが読み取れる
-    File::open("/sys/devices/ocp.2/helper.14/AIN0","r"){|f|
-      brightness = f.read.to_i
-      puts "read brightness 1"
+    File::open("#{$brightness}","r"){|f|
+      body="client=#{$place}&data[brightness]=#{f.read}"
+      res = http.post('/sensor/write',body) #データpost
+      puts body #送信データの表示
     }
+    
+    
     #また、別のピンからのアナログ値を読み取るには、少し待つ必要がある
     sleep 1
-    File::open("/sys/devices/ocp.2/helper.14/AIN1","r"){|f|
-      brightness = f.read.to_i
-      puts "read brightness 2"
+    File::open("#{$temperature}","r"){|f|
+      body="client=#{$place}&data[temperature]=#{f.read}"
+      res = http.post('/sensor/write',body) #データpost
+      puts body #送信データの表示
     }
-
-      if Time.now>(time+10) then #前回データを送信してから10秒以上経過していれば、次のデータを送信
-        puts "send post req"
-        body="client=#{$place}&data[temperature]=#{brightness.to_s}"
-        res = http.post('/sensor/write',body) #データpost
-        puts body #送信データの表示
-        time = Time.now #送信時刻のアップデート
-      end
-      
     sleep 1 #一秒待つ
   end  #loopここまで
 }

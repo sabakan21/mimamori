@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <title>AccessBoard一覧</title>
+  </head>
+  <body>
+  <h1>AccessBoard一覧</h1>
+  <table border="1">
+    <tr>
+      <th>AccessBoard名</th>
+      <th>備考</th>
+    </tr>
+    <% @clients.each do |client| %>
+    <tr>
+      <td><%= "<a href='/detail?client=#{client.client}'>#{client.client}</a>" %></td>
+      <td><%= client.memo %></td>
+    </tr>
+    <% end %>
+  </table>
+  <h3>クライアントの追加</h3>
+  <form method="POST" action="/client_add">
+    <div>AccessBoard名：<input type="text" name="client"></div>
+    <div>備考：<input type="text" name="memo"></div>
+    <input type="submit" value="送信">
+    <input type="reset" value="取消">
+  </form>
+  </body>
+</html>

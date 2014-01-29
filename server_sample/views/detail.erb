@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <title><%= @client.client %>の情報</title>
+  </head>
+  <body>
+  <h1><%= @client.client %>の情報</h1>
+  <p><%= @client.memo %></p>
+  <h3>センサー</h3>
+  <table>
+    <tr><th>センサー</th><th>値</th><th>取得日時</th></tr>
+    <% @sensors.each do |data| %>
+    <tr>
+      <td><%= data.key %></td>
+      <td><%= data.data %></td>
+      <td><%= data.date.to_s %></td>
+    </tr>
+    <% end %>
+  </table>
+  <h3>制御</h3>
+  <form method="POST" action="/control_update">
+    <%= "<input type='hidden' name='client' value='#{@client.client}'>" %>
+    <table>
+      <tr><th>制御対象</th><th>値</th></tr>
+      <% @controls.each do |data| %>
+      <tr>
+	<td><%= data.key %></td>
+	<td><%= "<input size='10' type='text' name='#{data.key}' value='#{data.data}'>" %></td>
+      </tr>
+      <% end %>
+    </table>
+    <input type="submit" value="制御値を更新する">
+  </form>
+  <hr>
+  <a href="/">トップへ戻る</a>
+  </body>
+</html>

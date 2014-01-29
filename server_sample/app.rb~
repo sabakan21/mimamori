@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+#
+# Sinatra がインストールされている必要があります
+# 実行は「ruby app.rb」です
+#
+
+require 'sinatra'
+
+set :bind, '172.20.100.1'
+
+post '/service/write' do
+  puts "client: #{params[:client]}"
+  puts "data: #{params[:data]}"
+  puts "key: #{params[:key]}"
+  $stdout.flush
+  "client: #{params[:client]} data: #{params[:data]} key: #{params[:key]}"
+end
+
+get '/service/read:name' do
+  File.open("./#{params[:name]}","r"){|f| #nameと同じ名前のファイルに返す値が書いてあります
+    "#{f.read}"
+  }
+end
+
+# client = "xxxxx id"
+# data = [ {:sensor1 => 10}, {:sensor2 => 34}, {:sensorX => "ABCD"} ]
+# key = "XXXXXX"
+#
+# 
+# curl コマンドが使えるなら，以下でサーバのテストができます
+# http://localhost:4567/ は適切に変えてください
+# curl http://localhost:4567/service/read -X GET -d "client=c1" -d "data=sensor"# 
+
+
+
