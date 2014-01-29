@@ -1,69 +1,69 @@
 require 'net/http'
 require 'uri'
-load '/boot/uboot/settings/config.rb'  #config‚É‹Lq‚³‚ê‚Ä‚¢‚é“à—e‚ğ“Ç‚İ‚Ş($place“™)
+load '/boot/uboot/settings/config.rb'  #configã«è¨˜è¿°ã•ã‚Œã¦ã„ã‚‹å†…å®¹ã‚’èª­ã¿è¾¼ã‚€($placeç­‰)
 File.open("port","r"){|f|
-  uri=URI("http://mimamori-sensor.care-link.net:#{f.read}")#‘—MæURI‚Ìİ’è
+  uri=URI("http://mimamori-sensor.care-link.net:#{f.read}")#é€ä¿¡å…ˆURIã®è¨­å®š
 }
 
 =begin
-ƒfƒWƒ^ƒ‹“üo—Í‚É‚Â‚¢‚Ä
-ˆÈ‰º‚Ì—¬‚ê‚ÅGPIOƒsƒ“‚ğ—˜—p‚µ‚Ü‚·B
-1.ƒsƒ“‚ğ—˜—p‚Å‚«‚é‚æ‚¤‚É‚·‚é
-/sys/class/gpio/‚ªGPIO‚ÉŠÖ‚·‚éƒfƒBƒŒƒNƒgƒŠ‚Å‚·B
-/sys/class/gpio/export‚É—˜—p‚·‚éƒsƒ“‚Ì”Ô†‚ğ‘‚«‚Ş‚ÆA‚»‚Ìƒsƒ“‚ÌƒfƒBƒŒƒNƒgƒŠ‚ªoŒ»‚µ‚Ü‚·B
-ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚È‚ç‚Î
+ãƒ‡ã‚¸ã‚¿ãƒ«å…¥å‡ºåŠ›ã«ã¤ã„ã¦
+ä»¥ä¸‹ã®æµã‚Œã§GPIOãƒ”ãƒ³ã‚’åˆ©ç”¨ã—ã¾ã™ã€‚
+1.ãƒ”ãƒ³ã‚’åˆ©ç”¨ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
+/sys/class/gpio/ãŒGPIOã«é–¢ã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ã™ã€‚
+/sys/class/gpio/exportã«åˆ©ç”¨ã™ã‚‹ãƒ”ãƒ³ã®ç•ªå·ã‚’æ›¸ãè¾¼ã‚€ã¨ã€ãã®ãƒ”ãƒ³ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒå‡ºç¾ã—ã¾ã™ã€‚
+ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ãªã‚‰ã°
 $echo 60 > /sys/class/gpio/export
-‚Æ‚·‚é‚Ægpio“à‚Égpio60‚Æ‚¢‚¤ƒfƒBƒŒƒNƒgƒŠ‚ªŒ»‚ê‚Ü‚·B
+ã¨ã™ã‚‹ã¨gpioå†…ã«gpio60ã¨ã„ã†ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒç¾ã‚Œã¾ã™ã€‚
 
-ƒsƒ“‚ğ“ü—Í‚Ég‚¤‚©o—Í‚Ég‚¤‚©‚Ídirection‚É‘‚«‚Ş‚±‚Æ‚Åİ’è‚µ‚Ü‚·B
-"out"‚ğ‘‚«‚ß‚Îo—Í‚ÉA"in"‚ğ‘‚«‚ß‚Î“ü—Íƒ‚[ƒh‚É‚È‚è‚Ü‚·B
+ãƒ”ãƒ³ã‚’å…¥åŠ›ã«ä½¿ã†ã‹å‡ºåŠ›ã«ä½¿ã†ã‹ã¯directionã«æ›¸ãè¾¼ã‚€ã“ã¨ã§è¨­å®šã—ã¾ã™ã€‚
+"out"ã‚’æ›¸ãè¾¼ã‚ã°å‡ºåŠ›ã«ã€"in"ã‚’æ›¸ãè¾¼ã‚ã°å…¥åŠ›ãƒ¢ãƒ¼ãƒ‰ã«ãªã‚Šã¾ã™ã€‚
 
-ƒsƒ“‚Ìó‘Ô‚Ívalueƒtƒ@ƒCƒ‹‚Å‚·B
-o—Íƒ‚[ƒh‚Å0‚©1‚ğ‘‚«‚ß‚ÎAHigh-Low‚ğØ‚è‘Ö‚¦‚ç‚ê‚Ü‚·‚µA
-“ü—Íƒ‚[ƒh‚Å‚ ‚ê‚ÎA0‚©1‚ª‘‚¢‚Ä‚ ‚è‚Ü‚·B
+ãƒ”ãƒ³ã®çŠ¶æ…‹ã¯valueãƒ•ã‚¡ã‚¤ãƒ«ã§ã™ã€‚
+å‡ºåŠ›ãƒ¢ãƒ¼ãƒ‰ã§0ã‹1ã‚’æ›¸ãè¾¼ã‚ã°ã€High-Lowã‚’åˆ‡ã‚Šæ›¿ãˆã‚‰ã‚Œã¾ã™ã—ã€
+å…¥åŠ›ãƒ¢ãƒ¼ãƒ‰ã§ã‚ã‚Œã°ã€0ã‹1ãŒæ›¸ã„ã¦ã‚ã‚Šã¾ã™ã€‚
 
 
-ƒAƒiƒƒO“ü—Í‚É‚Â‚¢‚Ä
-ƒAƒiƒƒO“ü—Í‚Í/sys/devices/ocp.2/helper.14/‚ÌƒfƒBƒŒƒNƒgƒŠ“à‚É‚ ‚è‚Ü‚·B
-‚½‚¾‚µA‚±‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÍƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Å
+ã‚¢ãƒŠãƒ­ã‚°å…¥åŠ›ã«ã¤ã„ã¦
+ã‚¢ãƒŠãƒ­ã‚°å…¥åŠ›ã¯/sys/devices/ocp.2/helper.14/ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã«ã‚ã‚Šã¾ã™ã€‚
+ãŸã ã—ã€ã“ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã§
 $echo cape-bone-iio > /sys/devices/bone_capemgr.9/slots
-‚ğ‚µ‚È‚¯‚ê‚Î‘¶İ‚µ‚Ü‚¹‚ñB
-¡‰ñ‚Í/etc/rc.local‚É‹Lq‚µ‚Ä‚¢‚Ü‚·‚Ì‚ÅƒvƒƒOƒ‰ƒ€‚Å‚ÍÀs‚µ‚Ä‚¢‚Ü‚¹‚ñB
+ã‚’ã—ãªã‘ã‚Œã°å­˜åœ¨ã—ã¾ã›ã‚“ã€‚
+ä»Šå›ã¯/etc/rc.localã«è¨˜è¿°ã—ã¦ã„ã¾ã™ã®ã§ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§ã¯å®Ÿè¡Œã—ã¦ã„ã¾ã›ã‚“ã€‚
 
-ƒAƒiƒƒO“ü—Í’l‚Í/sys/devices/ocp.2/helper.14/AIN*‚É‹Lq‚µ‚Ä‚ ‚è‚Ü‚·
-‚±‚Ì’l‚Ì’PˆÊ‚Íƒ~ƒŠƒ{ƒ‹ƒg‚Å‚·B
-•¡”‚ÌƒAƒiƒƒO’l‚ğ“Ç‚İæ‚é‚É‚ÍA/D•ÏŠ·‚Ì“s‡ã­‚µ‘Ò‚Á‚Ä‚©‚çŸ‚Ìƒsƒ“‚ğ
+ã‚¢ãƒŠãƒ­ã‚°å…¥åŠ›å€¤ã¯/sys/devices/ocp.2/helper.14/AIN*ã«è¨˜è¿°ã—ã¦ã‚ã‚Šã¾ã™
+ã“ã®å€¤ã®å˜ä½ã¯ãƒŸãƒªãƒœãƒ«ãƒˆã§ã™ã€‚
+è¤‡æ•°ã®ã‚¢ãƒŠãƒ­ã‚°å€¤ã‚’èª­ã¿å–ã‚‹ã«ã¯A/Då¤‰æ›ã®éƒ½åˆä¸Šå°‘ã—å¾…ã£ã¦ã‹ã‚‰æ¬¡ã®ãƒ”ãƒ³ã‚’
 =end
 
 
 =begin
-#ƒfƒWƒ^ƒ‹o—Í‚Ìİ’è
-#60”Ô‚ÌGPIOpin‚ğ—˜—p‚Å‚«‚é‚æ‚¤‚É‚·‚é
+#ãƒ‡ã‚¸ã‚¿ãƒ«å‡ºåŠ›ã®è¨­å®š
+#60ç•ªã®GPIOpinã‚’åˆ©ç”¨ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 File.open("/sys/class/gpio/export","w"){|f|
   f.print 60
 }
 
-#60”Ô‚ÌGPIOpin‚ğo—Íƒ‚[ƒh‚Éİ’è
+#60ç•ªã®GPIOpinã‚’å‡ºåŠ›ãƒ¢ãƒ¼ãƒ‰ã«è¨­å®š
 File.open("/sys/class/gpio/gpio60/direction","w"){|f|
   f.print "out"
 }
 =end
 
 =begin 
-#ƒAƒiƒƒO“ü—Í‚Ìİ’èBrc.local‚É‹Lq‚µ‚Ä‚ ‚ê‚Î•s—vB
+#ã‚¢ãƒŠãƒ­ã‚°å…¥åŠ›ã®è¨­å®šã€‚rc.localã«è¨˜è¿°ã—ã¦ã‚ã‚Œã°ä¸è¦ã€‚
 File.open("/sys/devices/bone_capemgr.9/slots","w"){|f|
   f.print "cape-bone-iio"
 }
 =end
 
 
-time =Time.now #–ˆ•bƒf[ƒ^‚ğ‘—M‚µ‚È‚¢‚½‚ß‚ÌŠÔƒ`ƒFƒbƒN—p•Ï”
+time =Time.now #æ¯ç§’ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã—ãªã„ãŸã‚ã®æ™‚é–“ãƒã‚§ãƒƒã‚¯ç”¨å¤‰æ•°
 
-Net::HTTP.start(uri.host,uri.port){|http|  #httpÚ‘±ŠJn
-  loop do  #loopŠJn
+Net::HTTP.start(uri.host,uri.port){|http|  #httpæ¥ç¶šé–‹å§‹
+  loop do  #loopé–‹å§‹
 
-=begin #ƒfƒWƒ^ƒ‹o—Í
-    #60”Ô‚ÌGPIOpin‚Åo—Í‚·‚é
+=begin #ãƒ‡ã‚¸ã‚¿ãƒ«å‡ºåŠ›
+    #60ç•ªã®GPIOpinã§å‡ºåŠ›ã™ã‚‹
         File.open("/sys/class/gpio/gpio60/value","w"){|f|
           f.print 1
         }
@@ -71,28 +71,28 @@ Net::HTTP.start(uri.host,uri.port){|http|  #httpÚ‘±ŠJn
 
 
 
-    #ƒZƒ“ƒTƒf[ƒ^—p‚Ì•Ï”éŒ¾
+    #ã‚»ãƒ³ã‚µãƒ‡ãƒ¼ã‚¿ç”¨ã®å¤‰æ•°å®£è¨€
     brightness = Numeric.new
 
-    #ƒAƒiƒƒOƒZƒ“ƒT‚Ì’l“Ç‚İæ‚è
-    #BeagleboneBlack‚Å‚ÍƒAƒiƒƒO’l‚Í1800mV‚Ü‚Å‚Ìƒ~ƒŠƒ{ƒ‹ƒg‚ª“Ç‚İæ‚ê‚é
+    #ã‚¢ãƒŠãƒ­ã‚°ã‚»ãƒ³ã‚µã®å€¤èª­ã¿å–ã‚Š
+    #BeagleboneBlackã§ã¯ã‚¢ãƒŠãƒ­ã‚°å€¤ã¯1800mVã¾ã§ã®ãƒŸãƒªãƒœãƒ«ãƒˆãŒèª­ã¿å–ã‚Œã‚‹
     File::open("/sys/devices/ocp.2/helper.14/AIN0","r"){|f|
       brightness = f.read.to_i
     }
-    #‚Ü‚½A•Ê‚Ìƒsƒ“‚©‚ç‚ÌƒAƒiƒƒO’l‚ğ“Ç‚İæ‚é‚É‚ÍA­‚µ‘Ò‚Â•K—v‚ª‚ ‚é
+    #ã¾ãŸã€åˆ¥ã®ãƒ”ãƒ³ã‹ã‚‰ã®ã‚¢ãƒŠãƒ­ã‚°å€¤ã‚’èª­ã¿å–ã‚‹ã«ã¯ã€å°‘ã—å¾…ã¤å¿…è¦ãŒã‚ã‚‹
     sleep 1
     File::open("/sys/devices/ocp.2/helper.14/AIN1","r"){|f|
       brightness = f.read.to_i
     }
 
-      if Time.now>(time+10) then #‘O‰ñƒf[ƒ^‚ğ‘—M‚µ‚Ä‚©‚ç10•bˆÈãŒo‰ß‚µ‚Ä‚¢‚ê‚ÎAŸ‚Ìƒf[ƒ^‚ğ‘—M
+      if Time.now>(time+10) then #å‰å›ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã—ã¦ã‹ã‚‰10ç§’ä»¥ä¸ŠçµŒéã—ã¦ã„ã‚Œã°ã€æ¬¡ã®ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡
         puts "send post req"
         body="client=#{$place}&data[temperature]=#{brightness.to_s}"
-        res = http.post('/sensor/write',body) #ƒf[ƒ^post
-        puts body #‘—Mƒf[ƒ^‚Ì•\¦
-        time = Time.now #‘—M‚ÌƒAƒbƒvƒf[ƒg
+        res = http.post('/sensor/write',body) #ãƒ‡ãƒ¼ã‚¿post
+        puts body #é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã®è¡¨ç¤º
+        time = Time.now #é€ä¿¡æ™‚åˆ»ã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
       end
       
-    sleep 1 #ˆê•b‘Ò‚Â
-  end  #loop‚±‚±‚Ü‚Å
+    sleep 1 #ä¸€ç§’å¾…ã¤
+  end  #loopã“ã“ã¾ã§
 }
