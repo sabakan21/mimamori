@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 load '/boot/uboot/settings/config.rb'  #configに記述されている内容を読み込む($place等)
 File.open("port","r"){|f|
-  uri=URI("http://mimamori-sensor.care-link.net:#{f.read}")#送信先URIの設定
+  $uri=URI("http://mimamori-sensor.care-link.net:#{f.read}")#送信先URIの設定
 }
 
 =begin
@@ -59,7 +59,7 @@ File.open("/sys/devices/bone_capemgr.9/slots","w"){|f|
 
 time =Time.now #毎秒データを送信しないための時間チェック用変数
 
-Net::HTTP.start(uri.host,uri.port){|http|  #http接続開始
+Net::HTTP.start($uri.host,$uri.port){|http|  #http接続開始
   loop do  #loop開始
 
 =begin #デジタル出力
@@ -78,11 +78,13 @@ Net::HTTP.start(uri.host,uri.port){|http|  #http接続開始
     #BeagleboneBlackではアナログ値は1800mVまでのミリボルトが読み取れる
     File::open("/sys/devices/ocp.2/helper.14/AIN0","r"){|f|
       brightness = f.read.to_i
+      puts "read brightness 1"
     }
     #また、別のピンからのアナログ値を読み取るには、少し待つ必要がある
     sleep 1
     File::open("/sys/devices/ocp.2/helper.14/AIN1","r"){|f|
       brightness = f.read.to_i
+      puts "read brightness 2"
     }
 
       if Time.now>(time+10) then #前回データを送信してから10秒以上経過していれば、次のデータを送信
