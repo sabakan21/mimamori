@@ -88,9 +88,4 @@ Net::HTTP.start($uri.host,$uri.port){|http|  #http接続開始
     }
     sleep 1 #一秒待つ
   end  #loopここまで
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> 3aeb739c171565b42386155835f1a4701abda541
