@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 load '/boot/uboot/settings/config.rb'  #configに記述されている内容を読み込む($place等)
 File.open("port","r"){|f|
-  $uri=URI("http://mimamori-sensor.care-link.net:#{f.read}")#送信先URIの設定
+  $uri=URI("http://#{$mimamori}:#{f.read}")#送信先URIの設定
 }
 
 =begin
